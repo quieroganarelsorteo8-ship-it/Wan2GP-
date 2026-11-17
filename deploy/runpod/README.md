@@ -5,7 +5,7 @@ This setup runs WanGP's original Gradio interface on a rented NVIDIA GPU Pod so 
 ## Before starting
 
 - You need a RunPod account and billing credit. GPU time and storage cost money.
-- Create a **GPU Pod** (not Serverless) using a PyTorch / NVIDIA CUDA template with **Python 3.11** and working `torch.cuda`.
+- Create a **GPU Pod** (not Serverless). Recommended official **base image**: `runpod/pytorch:2.1.0-cu1300-torch2121-ubuntu2404` (CUDA 13.0, Ubuntu 24.04). This base includes PyTorch 2.12.1, but the installer creates a separate Python 3.11 virtualenv with PyTorch 2.10.0 + CUDA 13.0, as recommended by WanGP. RunPod's default Python may be 3.12; the installation explicitly selects `python3.11`. Check that the image contains a working `python3.11` command before installing.
 - Choose a GPU appropriate for your model. About **24 GB VRAM** is a useful starting point for broader model compatibility; smaller models can use less.
 - Reserve ample **persistent storage**, initially around 100 GB or more, depending on the models you download. Make sure `/workspace` is on persistent storage.
 - Configure an **HTTP exposed port: 7860** in the Pod template/settings.
