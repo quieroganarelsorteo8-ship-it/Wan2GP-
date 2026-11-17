@@ -13509,6 +13509,11 @@ if __name__ == "__main__":
         server_name = "0.0.0.0"
     if len(server_name) == 0:
         server_name = os.getenv("SERVER_NAME", "localhost")
+    # Require a login whenever WanGP is exposed beyond localhost.
+    web_user = os.environ.get("WAN2GP_WEB_USER", "").strip()
+    web_password = os.environ.get("WAN2GP_WEB_PASSWORD", "")
+    if args.listen and (not web_user or not web_password):
+        raise RuntimeError("WAN2GP_WEB_USER and WAN2GP_WEB_PASSWORD are required with --listen")
     demo = create_ui()
     clear_startup_lock()
     if args.open_browser:
@@ -13523,5 +13528,6 @@ if __name__ == "__main__":
         server_name=server_name,
         server_port=server_port,
         share=args.share,
+        auth=(web_user, web_password) if web_user and web_password else None,
         allowed_paths=list({save_path, image_save_path, audio_save_path, "icons"}),
     )
