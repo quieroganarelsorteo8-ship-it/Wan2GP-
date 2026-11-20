@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es-AR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>WanGP · Estudio de video</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#172720;background:#eef1eb}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;display:grid;place-items:center;padding:1.25rem}
+main{width:min(100%,34rem);padding:clamp(1.5rem,6vw,3rem);border:1px solid #c4d0c4;background:#fcfdf9;border-radius:1.25rem}
+h1{font-size:clamp(2rem,7vw,3rem);line-height:1.05;letter-spacing:-.04em;margin:0}
+p{line-height:1.5}form{margin-top:2rem}label{font-weight:650}
+input,button{width:100%;padding:.85rem 1rem;border-radius:.5rem;font:inherit}
+input{border:1px solid #6a796f;margin:.5rem 0 1rem}
+button{background:#234f3c;color:white;border:0;font-weight:700;cursor:pointer}
+a{color:#234f3c}footer{margin-top:1.25rem;font-size:.9rem}
+</style>
+<main>
+<h1>WanGP</h1>
+<p>Abrí el estudio de video de tu pod. WanGP debe estar en ejecución y el puerto HTTP 7860 debe estar habilitado.</p>
+<form id="launcher">
+<label for="pod">ID del pod de Runpod</label>
+<input id="pod" name="pod" required pattern="[a-z0-9]+" maxlength="64" spellcheck="false" autocapitalize="none" autocomplete="off" title="Usá el ID del pod en letras minúsculas y números.">
+<button>Abrir estudio de video</button>
+</form>
+<noscript>Activá JavaScript para abrir el estudio.</noscript>
+<footer><a href="https://console.runpod.io/pods">Ver mis pods en Runpod</a></footer>
+</main>
+<script>
+document.querySelector('#launcher').addEventListener('submit', function (event) {
+  event.preventDefault();
+  const id = document.querySelector('#pod').value;
+  if (/^[a-z0-9]{1,64}$/.test(id)) {
+    window.location.assign('https://' + id + '-7860.proxy.runpod.net/');
+  }
+});
+</script>
+</html>
